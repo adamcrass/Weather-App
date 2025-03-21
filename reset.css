@@ -1,0 +1,54 @@
+/* Reset margins, paddings, and borders for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+/* Set default font smoothing for better text rendering on Safari */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure full height and width */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+/* Remove default list styling */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Ensure images don’t overflow their containers */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove outline on focused elements for better aesthetics */
+*:focus {
+  outline: none;
+}
