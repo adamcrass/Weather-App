@@ -5,10 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="reset.css" />
-    <title>Document</title>
+    <title>Weather App</title>
   </head>
   <body>
-    <nav id="navbar"></nav>
-    <script href="script.js"></script>
+    <nav id="navbar">
+      <div class="nav-content">
+        <div class="slider-container">
+          <input
+            type="range"
+            id="temp-slider"
+            min="0"
+            max="120"
+            value="57"
+            step="1"
+          />
+          <span id="slider-value">57°</span>
+        </div>
+      </div>
+    </nav>
+    <div id="weather-picture"></div>
+
+    <div id="half-circle">
+      57
+      <div id="marker">|</div>
+    </div>
+
+    <div id="outside-circle">
+      <svg width="400" height="400">
+        <defs>
+          <path
+            id="curve"
+            d="M 200,50 A 150,150 0 1,1 200,350 A 150,150 0 1,1 200,50"
+          />
+        </defs>
+        <g transform="rotate(-3, 200, 200)">
+          <text font-size="24" fill="white">
+            <textPath href="#curve" startOffset="0%">
+              <tspan dy="0" fill="#87CEEB">0</tspan>
+              <tspan dx="27" dy="0" fill="#87CEFA">10</tspan>
+              <tspan dx="27" dy="0" fill="#00BFFF">20</tspan>
+              <tspan dx="27" dy="0" fill="#1E90FF">30</tspan>
+              <tspan dx="27" dy="0" fill="#4169E1">40</tspan>
+              <tspan dx="27" dy="0" fill="#32CD32">50</tspan>
+              <tspan dx="26" dy="0" fill="#ADFF2F">60</tspan>
+              <tspan dx="26" dy="0" fill="#FFFF00">70</tspan>
+              <tspan dx="26" dy="0" fill="#FFA500">80</tspan>
+              <tspan dx="25" dy="0" fill="#FF8C00">90</tspan>
+              <tspan dx="22" dy="0" fill="#FF4500">100</tspan>
+              <tspan dx="13" dy="0" fill="#FF0000">110</tspan>
+              <tspan dx="10" dy="0" fill="#8B0000">120</tspan>
+            </textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
+
+    <div id="time-belt">
+      <div class="time-belt-wrapper">
+        <div class="time-chunk">1am</div>
+        <div class="time-chunk">2am</div>
+        <div class="time-chunk">3am</div>
+        <div class="time-chunk">4am</div>
+        <div class="time-chunk">5am</div>
+        <div class="time-chunk">6am</div>
+        <div class="time-chunk">7am</div>
+        <div class="time-chunk">8am</div>
+        <div class="time-chunk">9am</div>
+        <div class="time-chunk">10am</div>
+        <div class="time-chunk">11am</div>
+        <div class="time-chunk">12pm</div>
+        <div class="time-chunk">1pm</div>
+        <div class="time-chunk">2pm</div>
+        <div class="time-chunk">3pm</div>
+        <div class="time-chunk">4pm</div>
+        <div class="time-chunk">5pm</div>
+        <div class="time-chunk">6pm</div>
+        <div class="time-chunk">7pm</div>
+        <div class="time-chunk">8pm</div>
+        <div class="time-chunk">9pm</div>
+        <div class="time-chunk">10pm</div>
+        <div class="time-chunk">11pm</div>
+        <div class="time-chunk">12pm</div>
+        <div class="time-chunk">1am</div>
+        <div class="time-chunk">2am</div>
+        <div class="time-chunk">3am</div>
+        <div class="time-chunk">4am</div>
+        <div class="time-chunk">5am</div>
+        <div class="time-chunk">6am</div>
+        <div class="time-chunk">7am</div>
+        <div class="time-chunk">8am</div>
+        <div class="time-chunk">9am</div>
+        <div class="time-chunk">10am</div>
+        <div class="time-chunk">11am</div>
+        <div class="time-chunk">12pm</div>
+        <div class="time-chunk">1pm</div>
+        <div class="time-chunk">2pm</div>
+        <div class="time-chunk">3pm</div>
+        <div class="time-chunk">4pm</div>
+        <div class="time-chunk">5pm</div>
+        <div class="time-chunk">6pm</div>
+        <div class="time-chunk">7pm</div>
+        <div class="time-chunk">8pm</div>
+        <div class="time-chunk">9pm</div>
+        <div class="time-chunk">10pm</div>
+        <div class="time-chunk">11pm</div>
+        <div class="time-chunk">12pm</div>
+      </div>
+    </div>
+
+    <div id="week-temp">
+      <div class="week-row">Monday</div>
+      <div class="week-row">Tuesday</div>
+      <div class="week-row">Wednesday</div>
+      <div class="week-row">Thursday</div>
+      <div class="week-row">Friday</div>
+      <div class="week-row">Saturday</div>
+      <div class="week-row">Sunday</div>
+    </div>
+
+    <div id="day-temp-range">
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+      <div class="temp-range-row">40-50</div>
+    </div>
+
+    <div id="week-dates">
+      <div class="dates-row">5/10</div>
+      <div class="dates-row">5/11</div>
+      <div class="dates-row">5/12</div>
+      <div class="dates-row">5/13</div>
+      <div class="dates-row">5/14</div>
+      <div class="dates-row">5/15</div>
+      <div class="dates-row">5/16</div>
+    </div>
+
+    <div id="locations">
+      <div class="locat-row">Prineville</div>
+      <div class="locat-row">Hawaii</div>
+      <div class="locat-row">Prague</div>
+      <div class="locat-row">New York</div>
+      <div class="locat-row">Madras</div>
+      <div class="locat-row">Tokyo</div>
+      <div class="locat-row">Greece</div>
+    </div>
+
+    <div id="location-temp">
+      <div class="locat-temp-row">55</div>
+      <div class="locat-temp-row">60</div>
+      <div class="locat-temp-row">35</div>
+      <div class="locat-temp-row">50</div>
+      <div class="locat-temp-row">50</div>
+      <div class="locat-temp-row">45</div>
+      <div class="locat-temp-row">70</div>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
