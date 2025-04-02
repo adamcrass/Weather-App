@@ -271,3 +271,13 @@ img {
 .locat-icons {
   margin-left: 95px;
 }
+
+#weather-picture {
+  width: 100%;
+  height: 40%;
+  position: absolute;
+  top: 8%;
+  background: url("../Images/Cloud Background (Weather App).png") no-repeat
+    center center;
+  background-size: cover;
+}
