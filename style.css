@@ -44,10 +44,12 @@ body {
 
 .time-chunk {
   flex: none;
+  display: flex;
   min-width: 80px; /* Ensures each time chunk has space */
   text-align: center;
   color: white;
   font-size: 25px;
+  flex-direction: column;
 }
 
 #week-temp {
@@ -246,4 +248,26 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+img {
+  width: 50px;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+#vertical-divider {
+  position: fixed;
+  top: 48%; /* Align with #time-belt */
+  left: 49.94%; /* Keep it centered */
+  height: 44%; /* Extend it downward */
+  width: 2px; /* Thin line */
+  background-color: black;
+  z-index: -1; /* Ensure it's above other elements */
+  transform: translateX(-60%);
+  pointer-events: none; /* Prevent interactions */
+}
+
+.locat-icons {
+  margin-left: 95px;
 }

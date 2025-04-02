@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function calculateRotation(value) {
     const minTemp = 0;
     const maxTemp = 120;
-    const maxAngle = -3;
+    const maxAngle = -3.5;
     const minAngle = -275;
     return (
       maxAngle -
