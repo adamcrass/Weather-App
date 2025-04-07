@@ -281,3 +281,15 @@ img {
     center center;
   background-size: cover;
 }
+
+#navigators {
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 50px;
+  padding-top: 23px;
+  position: absolute;
+  right: 20px;
+  color: white;
+}

@@ -29,8 +29,11 @@ ol {
 
 /* Remove default link styles */
 a {
-  text-decoration: none;
-  color: inherit;
+  all: unset; /* Resets all inherited and default styles */
+  display: inline-block; /* Ensures it still behaves like a clickable element */
+  cursor: pointer; /* Keeps the pointer cursor for usability */
+  text-decoration: none; /* Removes the default underline */
+  color: inherit; /* Inherits text color from the parent */
 }
 
 /* Remove default button styles */
