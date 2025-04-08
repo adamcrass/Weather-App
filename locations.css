@@ -24,8 +24,6 @@ body {
 }
 
 #saved-locations {
-  display: flex;
-  flex-direction: column;
   width: 50%;
   height: 92%;
   position: absolute;
@@ -33,6 +31,7 @@ body {
   right: 0%;
   z-index: 3;
   border-left: black 2px solid;
+  overflow-y: scroll; /* Add this property to allow scrolling */
 }
 
 .location-row {
