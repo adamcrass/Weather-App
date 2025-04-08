@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="locations.css" />
-    <link rel="stylesheet" href="../reset.css" />
+    <link rel="stylesheet" href="reset.css" />
     <title>RainCloud</title>
   </head>
   <body>
@@ -17,23 +17,91 @@
 
     <div id="saved-locations">
       <div class="location-row">
-        <span>Location Name</span>
+        <span>Location 1</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
             type="range"
             class="location-slider"
-            min="0°"
-            max="120°"
-            value="0°"
+            min="0"
+            max="120"
+            value="0"
           />
           <span class="right-value">120°</span>
-          <span id="current-value">0°</span>
+          <span class="current-value">0°</span>
+          <img src="../Images/Cloud Icon (Weather App).png" />
+        </div>
+      </div>
+      <div class="location-row">
+        <span>Location 2</span>
+        <div class="slider-container">
+          <span class="left-value">0°</span>
+          <input
+            type="range"
+            class="location-slider"
+            min="0"
+            max="120"
+            value="0"
+          />
+          <span class="right-value">120°</span>
+          <span class="current-value">0°</span>
+          <img src="../Images/Cloud Icon (Weather App).png" />
+        </div>
+      </div>
+      <div class="location-row">
+        <span>Location 3</span>
+        <div class="slider-container">
+          <span class="left-value">0°</span>
+          <input
+            type="range"
+            class="location-slider"
+            min="0"
+            max="120"
+            value="0"
+          />
+          <span class="right-value">120°</span>
+          <span class="current-value">0°</span>
+          <img src="../Images/Cloud Icon (Weather App).png" />
+        </div>
+      </div>
+      <div class="location-row">
+        <span>Location 4</span>
+        <div class="slider-container">
+          <span class="left-value">0°</span>
+          <input
+            type="range"
+            class="location-slider"
+            min="0"
+            max="120"
+            value="0"
+          />
+          <span class="right-value">120°</span>
+          <span class="current-value">0°</span>
+          <img src="../Images/Cloud Icon (Weather App).png" />
+        </div>
+      </div>
+      <div class="location-row">
+        <span>Location 5</span>
+        <div class="slider-container">
+          <span class="left-value">0°</span>
+          <input
+            type="range"
+            class="location-slider"
+            min="0"
+            max="120"
+            value="0"
+          />
+          <span class="right-value">120°</span>
+          <span class="current-value">0°</span>
+          <img src="../Images/Cloud Icon (Weather App).png" />
         </div>
       </div>
     </div>
 
-    <div id="search-box"></div>
+    <div id="search-box">
+      <input placeholder="Area" />
+      <div id="suggestions-container"></div>
+    </div>
 
     <div id="search-options"></div>
 
