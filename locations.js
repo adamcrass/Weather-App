@@ -2,6 +2,8 @@ function updateSliderValue(slider, currentValueSpan) {
   currentValueSpan.textContent = slider.value;
 }
 
+const API_KEY = "74f49bce5f9ce30ecf5a290595a23d1c"; // must be your actual key
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get all slider containers
   const sliderContainers = document.querySelectorAll(".slider-container");
@@ -22,40 +24,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.querySelector("#search-box input");
   const suggestionsContainer = document.querySelector("#suggestions-container");
 
-  // Example weather locations data (can be replaced with API call)
-  const locationsDatabase = [
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Phoenix",
-    "Philadelphia",
-    "San Antonio",
-    "San Diego",
-    "Dallas",
-    "Austin",
-    // Add more locations here or fetch from an API
-  ];
-
   // Function to filter locations based on the user's input
-  function filterLocations(query) {
-    return locationsDatabase.filter((location) =>
-      location.toLowerCase().includes(query.toLowerCase())
-    );
+  async function filterLocations(query) {
+    const limit = 5;
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+      query
+    )}&limit=${limit}&appid=${API_KEY}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      return data.map((loc) => ({
+        name: `${loc.name}, ${loc.country}`,
+        lat: loc.lat,
+        lon: loc.lon,
+      }));
+    } catch (error) {
+      console.error("Error fetching location data:", error);
+      return [];
+    }
   }
 
   // Function to display suggestions in the UI
   function displaySuggestions(suggestions) {
     suggestionsContainer.innerHTML = ""; // Clear previous suggestions
 
-    suggestions.forEach((suggestion) => {
+    suggestions.forEach((location) => {
       const suggestionElement = document.createElement("div");
       suggestionElement.classList.add("suggestion-item");
-      suggestionElement.textContent = suggestion;
+      suggestionElement.textContent = location.name;
 
       // Add click event to select a suggestion
       suggestionElement.addEventListener("click", function () {
-        addLocationToSaved(suggestion);
+        addLocationToSaved(location.name);
         searchInput.value = ""; // Clear search input
         suggestionsContainer.innerHTML = ""; // Clear suggestions
       });
@@ -65,11 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listener for the search input
-  searchInput.addEventListener("input", function () {
+  searchInput.addEventListener("input", async function () {
     const query = searchInput.value.trim();
 
     if (query) {
-      const filteredLocations = filterLocations(query);
+      const filteredLocations = await filterLocations(query);
       displaySuggestions(filteredLocations);
     } else {
       suggestionsContainer.innerHTML = ""; // Clear suggestions if input is empty
