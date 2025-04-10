@@ -8,7 +8,31 @@
     <title>RainCloud</title>
   </head>
   <body>
+    <div id="settings-menu">
+      <span id="close-button">Close</span>
+      <div id="settings-content">
+        <span>Edit Locations</span>
+        <span>My Location</span>
+        <label>
+          <input type="checkbox" id="dark-mode-toggle" />
+          Dark Mode
+        </label>
+        <label>
+          <input type="checkbox" id="temp-units-toggle" />
+          Use °F instead of °C
+        </label>
+        <label>
+          <input type="checkbox" id="use-current-location" />
+          Use My Current Location
+        </label>
+        <button id="clear-locations">Clear All Locations</button>
+      </div>
+    </div>
     <nav id="navbar">
+      <div id="settings-button">
+        <span>Settings</span>
+      </div>
+
       <div id="navbar-contents">
         <a href="index.html">Home</a>
         <a href="locations.html">Locations</a>
@@ -17,7 +41,7 @@
 
     <div id="saved-locations">
       <div class="location-row">
-        <span>Location 1</span>
+        <span>New York, USA</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
@@ -33,7 +57,7 @@
         </div>
       </div>
       <div class="location-row">
-        <span>Location 2</span>
+        <span>Tokyo, Japan</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
@@ -49,7 +73,7 @@
         </div>
       </div>
       <div class="location-row">
-        <span>Location 3</span>
+        <span>London, UK</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
@@ -65,7 +89,7 @@
         </div>
       </div>
       <div class="location-row">
-        <span>Location 4</span>
+        <span>Paris, France</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
@@ -81,7 +105,7 @@
         </div>
       </div>
       <div class="location-row">
-        <span>Location 5</span>
+        <span>Sydney, Australia</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input

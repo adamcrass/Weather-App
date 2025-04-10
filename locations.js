@@ -117,4 +117,49 @@ document.addEventListener("DOMContentLoaded", function () {
       alert(`You searched for: ${searchInput.value}`);
     }
   });
+
+  const settingsButton = document.getElementById("settings-button");
+  const settingsMenu = document.getElementById("settings-menu");
+  const closeButton = document.getElementById("close-button");
+
+  settingsButton.addEventListener("click", () => {
+    settingsMenu.style.display = "block";
+  });
+
+  closeButton.addEventListener("click", () => {
+    settingsMenu.style.display = "none";
+  });
+
+  // Dark Mode toggle
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  darkModeToggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark-mode", darkModeToggle.checked);
+  });
+
+  // Temperature Units toggle (°C / °F)
+  const tempUnitsToggle = document.getElementById("temp-units-toggle");
+  tempUnitsToggle.addEventListener("change", () => {
+    if (tempUnitsToggle.checked) {
+      // Switch to Fahrenheit
+    } else {
+      // Switch to Celsius
+    }
+  });
+
+  // Use My Current Location toggle
+  const currentLocationToggle = document.getElementById("use-current-location");
+  currentLocationToggle.addEventListener("change", () => {
+    if (currentLocationToggle.checked) {
+      // Get weather using geolocation API
+    } else {
+      // Use selected locations
+    }
+  });
+
+  // Clear Saved Locations
+  const clearLocationsButton = document.getElementById("clear-locations");
+  clearLocationsButton.addEventListener("click", () => {
+    const savedLocationsContainer = document.getElementById("saved-locations");
+    savedLocationsContainer.innerHTML = ""; // Clear the container
+  });
 });
