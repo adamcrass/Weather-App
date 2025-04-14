@@ -247,13 +247,13 @@ body.dark-mode .slider-container {
 }
 
 #map {
-  position: absolute;
   height: 46.25%;
   width: 50%;
   bottom: 0px;
   left: 0px;
   background-color: #030731;
   border-top: 2px solid black;
+  position: absolute;
   z-index: 1;
   display: none;
 }
@@ -278,5 +278,5 @@ body.dark-mode .slider-container {
   pointer-events: none;
   display: none;
   font-size: 0.9em;
-  z-index: 999;
+  z-index: 10;
 }

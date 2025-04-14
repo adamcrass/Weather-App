@@ -4,6 +4,67 @@ function updateSliderValue(slider, currentValueSpan) {
 
 const API_KEY = "74f49bce5f9ce30ecf5a290595a23d1c"; // must be your actual key
 
+async function getCapitalAndAddLocation(countryName) {
+  const apiKey = "74f49bce5f9ce30ecf5a290595a23d1c"; // Your OpenWeather API key
+  const geoUrl = `https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${apiKey}`;
+
+  try {
+    const response = await fetch(geoUrl);
+    const data = await response.json();
+
+    if (data && data.sys && data.sys.country) {
+      // Fetch country capital
+      const capital = data.name; // In OpenWeather, name will give the capital city of the country
+
+      // Add capital to the saved locations
+      addLocationToSaved(capital);
+    } else {
+      console.error("Capital not found or invalid country");
+    }
+  } catch (error) {
+    console.error("Error fetching capital:", error);
+  }
+}
+
+function addLocationToSaved(location) {
+  const savedLocationsContainer = document.querySelector("#saved-locations");
+
+  // Create a new location row with the selected location
+  const locationRow = document.createElement("div");
+  locationRow.classList.add("location-row");
+
+  locationRow.innerHTML = `
+    <button id="minus-button" style="display: none">-</button>
+    <span class="location-name">${location}</span>
+    <div class="slider-container">
+      <span class="left-value">0°</span>
+      <input type="range" class="location-slider" min="0" max="120" value="0" />
+      <span class="right-value">120°</span>
+      <span class="current-value">0°</span>
+      <img src="../Images/Cloud Icon (Weather App).png" />
+    </div>
+  `;
+
+  savedLocationsContainer.appendChild(locationRow);
+
+  // Update the current value for the new location row
+  const slider = locationRow.querySelector(".location-slider");
+  const currentValue = locationRow.querySelector(".current-value");
+
+  // Set initial value with degree symbol
+  currentValue.textContent = slider.value + "°";
+
+  // Update value on input for new location row
+  slider.addEventListener("input", function () {
+    currentValue.textContent = this.value + "°";
+  });
+
+  const minusButton = locationRow.querySelector("#minus-button");
+  minusButton.addEventListener("click", () => {
+    locationRow.remove();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get all slider containers
   const sliderContainers = document.querySelectorAll(".slider-container");
@@ -96,48 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
       suggestionsContainer.innerHTML = ""; // Clear suggestions if input is empty
     }
   });
-
-  // Function to add a new location to the saved list
-  function addLocationToSaved(location) {
-    const savedLocationsContainer = document.querySelector("#saved-locations");
-
-    // Create a new location row with the selected location
-    const locationRow = document.createElement("div");
-    locationRow.classList.add("location-row");
-
-    locationRow.innerHTML = `
-      <button id="minus-button" style="display: none">-</button>
-      <span class="location-name">${location}</span>
-      <div class="slider-container">
-        <span class="left-value">0°</span>
-        <input type="range" class="location-slider" min="0" max="120" value="0" />
-        <span class="right-value">120°</span>
-        <span class="current-value">0°</span>
-        <img src="../Images/Cloud Icon (Weather App).png" />
-      </div>
-    `;
-
-    savedLocationsContainer.appendChild(locationRow);
-
-    // Update the current value for the new location row
-    const slider = locationRow.querySelector(".location-slider");
-    const currentValue = locationRow.querySelector(".current-value");
-
-    // Set initial value with degree symbol
-    currentValue.textContent = slider.value + "°";
-
-    // Update value on input for new location row
-    slider.addEventListener("input", function () {
-      currentValue.textContent = this.value + "°";
-    });
-
-    const minusButton = locationRow.querySelector("#minus-button");
-    minusButton.addEventListener("click", () => {
-      locationRow.remove();
-    });
-
-    checkForOverlap();
-  }
 
   function checkForOverlap() {
     const rows = document.querySelectorAll(".location-row");
@@ -250,6 +269,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .append("path")
             .attr("class", "country")
             .attr("d", path)
+            .on("click", function (event, d) {
+              const countryName = d.properties.name;
+              getCapitalAndAddLocation(countryName); // Call the function to get capital and add it
+            })
             .on("mouseover", function (event, d) {
               d3.select(this).style("fill", "#005f99");
               tooltip.style("display", "block");
