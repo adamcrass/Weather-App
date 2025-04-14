@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="locations.css" />
     <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      #map {
+        height: 46.25%;
+        width: 50%;
+        bottom: 0px;
+        left: 0px;
+        background-color: #030731;
+        border-top: 2px solid black;
+        position: absolute;
+        z-index: 1;
+      }
+    </style>
     <title>RainCloud</title>
   </head>
   <body>
     <div id="settings-menu">
       <span id="close-button">Close</span>
       <div id="settings-content">
-        <span>Edit Locations</span>
-        <span>My Location</span>
+        <button id="edit-locations">Edit Locations</button>
         <label>
           <input type="checkbox" id="dark-mode-toggle" />
           Dark Mode
@@ -25,13 +37,15 @@
           <input type="checkbox" id="use-current-location" />
           Use My Current Location
         </label>
+        <label>
+          <input type="checkbox" id="show-map" />
+          Show Map
+        </label>
         <button id="clear-locations">Clear All Locations</button>
       </div>
     </div>
     <nav id="navbar">
-      <div id="settings-button">
-        <span>Settings</span>
-      </div>
+      <img id="settings-button" src="Images/Settings Icon (Weather App).png" />
 
       <div id="navbar-contents">
         <a href="index.html">Home</a>
@@ -41,6 +55,7 @@
 
     <div id="saved-locations">
       <div class="location-row">
+        <button id="minus-button" style="display: none">-</button>
         <span>New York, USA</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
@@ -53,10 +68,11 @@
           />
           <span class="right-value">120°</span>
           <span class="current-value">0°</span>
-          <img src="../Images/Cloud Icon (Weather App).png" />
+          <img src="Images/Cloud Icon (Weather App).png" />
         </div>
       </div>
       <div class="location-row">
+        <button id="minus-button" style="display: none">-</button>
         <span>Tokyo, Japan</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
@@ -73,6 +89,7 @@
         </div>
       </div>
       <div class="location-row">
+        <button id="minus-button" style="display: none">-</button>
         <span>London, UK</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
@@ -89,6 +106,7 @@
         </div>
       </div>
       <div class="location-row">
+        <button id="minus-button" style="display: none">-</button>
         <span>Paris, France</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
@@ -105,7 +123,8 @@
         </div>
       </div>
       <div class="location-row">
-        <span>Sydney, Australia</span>
+        <button id="minus-button" style="display: none">-</button>
+        <span class="location-name">Sydney, Australia</span>
         <div class="slider-container">
           <span class="left-value">0°</span>
           <input
@@ -129,6 +148,12 @@
 
     <div id="search-options"></div>
 
+    <div id="map"></div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
     <script src="locations.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   </body>
 </html>

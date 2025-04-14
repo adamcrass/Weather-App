@@ -21,6 +21,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  document.addEventListener("click", function (event) {
+    const isClickInsideSettings = settingsMenu.contains(event.target);
+    const isClickOnSettingsButton = settingsButton.contains(event.target);
+    const isClickOnMinusButton = event.target.id === "minus-button";
+
+    if (
+      !isClickInsideSettings &&
+      !isClickOnSettingsButton &&
+      !isClickOnMinusButton
+    ) {
+      settingsMenu.style.display = "none";
+
+      const minusButtons = document.querySelectorAll("#minus-button");
+      minusButtons.forEach((button) => {
+        button.style.display = "none";
+      });
+    }
+  });
+
   const searchInput = document.querySelector("#search-box input");
   const suggestionsContainer = document.querySelector("#suggestions-container");
 
@@ -87,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
     locationRow.classList.add("location-row");
 
     locationRow.innerHTML = `
-      <span>${location}</span>
+      <button id="minus-button" style="display: none">-</button>
+      <span class="location-name">${location}</span>
       <div class="slider-container">
         <span class="left-value">0°</span>
         <input type="range" class="location-slider" min="0" max="120" value="0" />
@@ -110,7 +130,37 @@ document.addEventListener("DOMContentLoaded", function () {
     slider.addEventListener("input", function () {
       currentValue.textContent = this.value + "°";
     });
+
+    const minusButton = locationRow.querySelector("#minus-button");
+    minusButton.addEventListener("click", () => {
+      locationRow.remove();
+    });
+
+    checkForOverlap();
   }
+
+  function checkForOverlap() {
+    const rows = document.querySelectorAll(".location-row");
+
+    rows.forEach((row) => {
+      const nameSpan = row.querySelector("span:not(#minus-button)");
+      const sliderContainer = row.querySelector(".slider-container");
+
+      if (nameSpan && sliderContainer) {
+        const nameRect = nameSpan.getBoundingClientRect();
+        const sliderRect = sliderContainer.getBoundingClientRect();
+
+        const isOverlapping =
+          nameRect.right > sliderRect.left && nameRect.left < sliderRect.right;
+
+        if (isOverlapping) {
+          console.log(`${nameSpan.textContent} is overlapped by its slider.`);
+        }
+      }
+    });
+  }
+
+  window.addEventListener("resize", checkForOverlap);
 
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
@@ -128,6 +178,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   closeButton.addEventListener("click", () => {
     settingsMenu.style.display = "none";
+
+    const minusButtons = document.querySelectorAll("#minus-button");
+    minusButtons.forEach((button) => {
+      button.style.display = "none";
+    });
   });
 
   // Dark Mode toggle
@@ -156,10 +211,85 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  const showMapToggle = document.getElementById("show-map");
+  const mapElement = document.getElementById("map");
+
+  showMapToggle.addEventListener("change", () => {
+    const isVisible = showMapToggle.checked;
+    mapElement.style.display = isVisible ? "block" : "none";
+
+    if (isVisible && !document.querySelector("#map svg")) {
+      const width = document.getElementById("map").clientWidth;
+      const height = document.getElementById("map").clientHeight;
+
+      const svg = d3
+        .select("#map")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      const projection = d3
+        .geoNaturalEarth1()
+        .scale(width / 6.3)
+        .translate([width / 2, height / 2]);
+
+      const path = d3.geoPath().projection(projection);
+      const tooltip = d3.select("#tooltip");
+
+      d3.json("https://unpkg.com/world-atlas@2.0.2/countries-110m.json").then(
+        (worldData) => {
+          const countries = topojson.feature(
+            worldData,
+            worldData.objects.countries
+          ).features;
+
+          svg
+            .selectAll(".country")
+            .data(countries)
+            .enter()
+            .append("path")
+            .attr("class", "country")
+            .attr("d", path)
+            .on("mouseover", function (event, d) {
+              d3.select(this).style("fill", "#005f99");
+              tooltip.style("display", "block");
+            })
+            .on("mousemove", function (event, d) {
+              const countryName = d.properties.name || "Unknown Country";
+              tooltip
+                .style("left", event.pageX + 10 + "px")
+                .style("top", event.pageY - 20 + "px")
+                .text(countryName);
+            })
+            .on("mouseout", function () {
+              d3.select(this).style("fill", "#c0c0c0");
+              tooltip.style("display", "none");
+            });
+        }
+      );
+    }
+  });
+
   // Clear Saved Locations
   const clearLocationsButton = document.getElementById("clear-locations");
   clearLocationsButton.addEventListener("click", () => {
     const savedLocationsContainer = document.getElementById("saved-locations");
     savedLocationsContainer.innerHTML = ""; // Clear the container
+  });
+
+  // Edit Locations toggle
+  const editLocationsButton = document.getElementById("edit-locations");
+
+  editLocationsButton.addEventListener("click", () => {
+    const minusButtons = document.querySelectorAll("#minus-button");
+    minusButtons.forEach((button) => {
+      button.style.display = button.style.display === "none" ? "block" : "none";
+      if (!button.dataset.listenerAttached) {
+        button.addEventListener("click", () => {
+          button.closest(".location-row").remove();
+        });
+        button.dataset.listenerAttached = "true";
+      }
+    });
   });
 });
